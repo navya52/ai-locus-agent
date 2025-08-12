@@ -1,0 +1,15 @@
+{
+  "name": "ai-locus-agent-lambda-basic",
+  "version": "1.0.0",
+  "description": "Basic AWS Lambda function",
+  "main": "upload_letter.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "pdf-parse": "^1.1.1"
+  },
+  "keywords": ["aws", "lambda"],
+  "author": "",
+  "license": "ISC"
+}

@@ -10,8 +10,7 @@ import base64
 from typing import Dict, Any, Optional
 
 try:
-    import PyPDF2
-    import pdfplumber
+    import pypdf
     PDF_LIBS_AVAILABLE = True
 except ImportError:
     PDF_LIBS_AVAILABLE = False
@@ -29,31 +28,21 @@ class PDFProcessor:
         ]
     
     def extract_text_from_pdf_bytes(self, pdf_bytes: bytes) -> str:
-        """Extract text from PDF bytes"""
+        """Extract text from PDF bytes using pypdf"""
         if not PDF_LIBS_AVAILABLE:
             return "PDF processing libraries not available"
         
         try:
             text_content = ""
             
-            # Try pdfplumber first
-            try:
-                with pdfplumber.open(io.BytesIO(pdf_bytes)) as pdf:
-                    for page in pdf.pages:
-                        page_text = page.extract_text()
-                        if page_text:
-                            text_content += page_text + "\n"
-                return text_content.strip()
-                
-            except Exception:
-                # Fallback to PyPDF2
-                with io.BytesIO(pdf_bytes) as file:
-                    pdf_reader = PyPDF2.PdfReader(file)
-                    for page in pdf_reader.pages:
-                        page_text = page.extract_text()
-                        if page_text:
-                            text_content += page_text + "\n"
-                return text_content.strip()
+            # Use pypdf for text extraction
+            with io.BytesIO(pdf_bytes) as file:
+                pdf_reader = pypdf.PdfReader(file)
+                for page in pdf_reader.pages:
+                    page_text = page.extract_text()
+                    if page_text:
+                        text_content += page_text + "\n"
+            return text_content.strip()
                 
         except Exception as e:
             return f"Error extracting text: {str(e)}"

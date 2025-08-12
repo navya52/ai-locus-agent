@@ -1,0 +1,71 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: AI Locus Agent - PDF Processing Lambda Function
+
+Globals:
+  Function:
+    Timeout: 30
+    MemorySize: 512
+    Runtime: python3.9
+    Environment:
+      Variables:
+        PYTHONPATH: /opt/python
+  Api:
+    Cors:
+      AllowMethods: "'POST,OPTIONS'"
+      AllowHeaders: "'Content-Type'"
+      AllowOrigin: "'*'"
+
+Resources:
+  UploadLetterFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: lambda_functions/
+      Handler: upload_letter.lambda_handler
+      Events:
+        ApiEvent:
+          Type: Api
+          Properties:
+            Path: /upload-letter
+            Method: post
+      Policies:
+        - S3ReadPolicy:
+            BucketName: !Ref UploadBucket
+        - DynamoDBCrudPolicy:
+            TableName: !Ref AnalysisTable
+
+  UploadBucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName: !Sub "ai-locus-agent-uploads-${AWS::AccountId}"
+      CorsConfiguration:
+        CorsRules:
+          - AllowedHeaders: ['*']
+            AllowedMethods: [GET, POST, PUT, DELETE]
+            AllowedOrigins: ['*']
+            MaxAge: 3000
+
+  AnalysisTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      TableName: ai-locus-agent-analysis
+      BillingMode: PAY_PER_REQUEST
+      AttributeDefinitions:
+        - AttributeName: storage_id
+          AttributeType: S
+      KeySchema:
+        - AttributeName: storage_id
+          KeyType: HASH
+
+Outputs:
+  ApiUrl:
+    Description: API Gateway endpoint URL
+    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/"
+  
+  UploadBucketName:
+    Description: S3 bucket for file uploads
+    Value: !Ref UploadBucket
+  
+  AnalysisTableName:
+    Description: DynamoDB table for analysis data
+    Value: !Ref AnalysisTable
