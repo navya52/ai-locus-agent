@@ -1,4 +1,4 @@
-# How to Use AI Locus Agent
+# How to Use AI Patient Context SUmmary Generator
 
 ## Live Demo
 
@@ -71,18 +71,20 @@ We also have fallbacks - if the AI can't analyze a document, we still extract th
 **Deployment:**  When we push code, it automatically builds and deploys to AWS. No manual server management needed, everything's serverless and scales automatically. AWS SAM for infrastructure-as-code, automated deployments via CloudFormation. Git version control with clean commit history and proper branching strategy.
 
 **Data Storage Security & Future Scaling:**
-Our current approach uses AWS DynamoDB with S3 for secure storage - PDFs go into private S3 buckets with unique keys, while analysis data gets AES-256 encrypted in DynamoDB with strict IAM access controls. This means Patient files are stored in secure digital vaults (like a locked filing cabinet) and the AI analysis is kept in an encrypted database (like a password-protected medical record) - only authorized staff can access either one.
+Our current approach uses AWS DynamoDB with S3 for secure storage - Patient files are stored in secure digital vaults (like a locked filing cabinet) and the AI analysis is kept in an encrypted database (like a password-protected medical record) - only authorized staff can access either one.
+In tech terms, PDFs go into private S3 buckets with unique keys, while analysis data gets AES-256 encrypted in DynamoDB with strict IAM access controls. 
 
-For future scaling, we're considering a hybrid approach: keep DynamoDB for fast, cost-effective primary storage, but add an OpenSearch cluster for semantic search capabilities (e.g., "find similar heart conditions"). The tradeoff is complexity vs. functionality - OpenSearch gives you full-text search plus vector capabilities in one managed service, but comes with higher costs and operational overhead compared to simple DynamoDB lookups.
+For future scaling, for example when someone searches "find similar heart conditions":
+we're considering a hybrid approach: keep DynamoDB for fast, cost-effective primary storage, but add an OpenSearch cluster . The tradeoff is complexity vs. functionality - OpenSearch is faster for indexing that DynamoDB, essentially because of the way it stores data. We can discuss this in depth if needed.
 
 
 ## System Logging & Debugging
-All logs go to AWS CloudWatch, so if something breaks, we can quickly figure out what happened and fix it.
+In production it is important to monitor problems and resolve them quickly. All our logs go to AWS CloudWatch, so if something breaks, we can quickly figure out what happened and fix it.
 Everything gets logged for debugging and compliance. We track:
+- **Errors**: What went wrong, when, and why
+- **Security events**: PHI detection  (Access attempts,data access logs are one step away)
 - **User actions**: File uploads, downloads, analysis requests
 - **System performance**: Processing times, API response times
-- **Errors**: What went wrong, when, and why
-- **Security events**: Access attempts, PHI detection, data access
 
 
 
