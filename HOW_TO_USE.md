@@ -2,13 +2,11 @@
 
 A comprehensive guide to using the AI Locus Agent system for clinical letter processing and analysis.
 
-## 🚀 Live Demo
+## Live Demo
 
 **Access the application**: http://ai-locus-agent-frontend.s3-website.eu-west-2.amazonaws.com
 
-> **Note**: Only HTTP works for now, had to rollback HTTPS last minute due to CloudFront's free plan not being suitable. For mobile testing, manually type `http://` before the URL
-
-
+> **Note**: Only HTTP works for now, had to rollback HTTPS last minute due to CloudFront's free plan not being suitable. Click on "proceed anyway"
 
 ## Getting Started
 
@@ -59,12 +57,12 @@ Every action is logged for compliance:
 - Check file size (should be under 10MB)
 - Normal processing time is 1-2 seconds
 
-## Security 
-
-**Security:** No sensitive data stored in browser - everything goes through HTTPS to the API. File uploads are validated client-side, but all real processing happens server-side. PHI detection happens before AI processing to protect privacy.
+## Tech stack
 
 **Backend:** AWS Lambda (Node.js) with three functions - PDF processing, data retrieval, and secure file access. OpenAI GPT-4 integration for AI analysis. S3 for file storage, DynamoDB for analysis results.
 
 **Frontend:** React.js single-page app with hooks for state management. Real-time updates, responsive design, and graceful error handling.
+
+**Security:** No sensitive data stored in browser - everything goes through HTTPS to the API. File uploads are validated client-side, but all real processing happens server-side. PHI detection happens before AI processing to protect privacy.
 
 **Deployment:** AWS SAM for infrastructure-as-code, automated deployments via CloudFormation. Git version control with clean commit history and proper branching strategy.
