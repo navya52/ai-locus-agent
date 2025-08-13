@@ -14,8 +14,8 @@ A comprehensive guide to using the AI Locus Agent system for clinical letter pro
 2. Navigate to: http://ai-locus-agent-frontend.s3-website.eu-west-2.amazonaws.com
  (Only HTTP works for now, had to rollback HTTPS last minute due to CloudFront's free plan not being suitable)
 3. You'll see the main interface with two tabs:
-   - ** Upload Letter** - For processing new letters
-   - **View Letters** - For viewing previously processed letters
+   - **Upload Letter** - For processing new letters
+   - **View Letters** - For viewing previously processed letters (letters already exist from me testing)
 
 ### Step 2: Upload Your First Letter
 1. Click on the **" Upload Letter"** tab
