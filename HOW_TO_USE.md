@@ -6,23 +6,21 @@ A comprehensive guide to using the AI Locus Agent system for clinical letter pro
 
 **Access the application**: http://ai-locus-agent-frontend.s3-website.eu-west-2.amazonaws.com
 
-## 📋 Prerequisites
+> **Note**: Only HTTP works for now, had to rollback HTTPS last minute due to CloudFront's free plan not being suitable. For mobile testing, manually type `http://` before the URL
 
-- Modern web browser (Chrome, Firefox, Safari, Edge)
-- PDF clinical letters to upload
-- Internet connection
 
-## 🎯 Getting Started
+
+## Getting Started
 
 ### Step 1: Access the Application
-1. Open your web browser
 2. Navigate to: http://ai-locus-agent-frontend.s3-website.eu-west-2.amazonaws.com
+ (Only HTTP works for now, had to rollback HTTPS last minute due to CloudFront's free plan not being suitable)
 3. You'll see the main interface with two tabs:
-   - **📄 Upload Letter** - For processing new letters
-   - **📋 View Letters** - For viewing previously processed letters
+   - ** Upload Letter** - For processing new letters
+   - **View Letters** - For viewing previously processed letters
 
 ### Step 2: Upload Your First Letter
-1. Click on the **"📄 Upload Letter"** tab
+1. Click on the **" Upload Letter"** tab
 2. Click **"Choose File"** or drag and drop a PDF clinical letter
 3. Click **"Upload and Analyze"**
 4. Wait for processing (typically 1-2 seconds)
@@ -32,111 +30,21 @@ A comprehensive guide to using the AI Locus Agent system for clinical letter pro
    - Risk assessment
    - Key findings and recommendations
 
-## 🔍 Testing the Interactive Features
+### Try the GDPR Compliance Hover Tooltip on the top right corner
+1. **Look for the "GDPR COMPLIANT"** badge (green button with checkmark) in the top right, a detailed tooltip will appear showing cool stuff
 
-### Testing GDPR Compliance Hover Tooltip
-1. **Upload a letter** and wait for processing
-2. **Switch to "📋 View Letters"** tab
-3. **Look for the "GDPR COMPLIANT"** badge (green button with checkmark)
-4. **Hover over the badge** - a detailed tooltip will appear showing:
-   - Data Minimization principles
-   - Right to Erasure implementation
-   - Data Portability features
-   - Consent Management details
-   - Audit Trail capabilities
-   - Encryption standards
-   - Data Retention policies
-
-### Testing Database Audit Trail Hover Tooltip
-1. **In the "📋 View Letters"** tab
+### Try the Database Audit Trail Hover Tooltip
+1. **In the " View Letters"** tab
 2. **Look for "DATABASE AUDIT TRAIL ?"** button (next to letter date)
 3. **Hover over the button** - a tooltip will appear showing:
-   - **Title**: "DynamoDB Record Details"
-   - **JSON blob** with actual database record structure:
-     ```json
-     {
-       "storage_id": "storage_1755049123456_abc123def",
-       "file_storage": {
-         "success": true,
-         "s3_key": "uploads/storage_1755049123456_abc123def/filename.pdf",
-         "file_size": 12345,
-         "upload_timestamp": "2025-08-13T02:38:51.123Z"
-       },
-       "processing_time": 1.2,
-       "nhs_number": "7052493519",
-       "ai_confidence": 85
-     }
-     ```
+  
+## Also added a demo feature for edge case input - PHI Detection & Masking
 
-## 📊 Understanding the Results
-
-### Upload Results Display
-After uploading a letter, you'll see:
-
-**Letter Information:**
-- **Filename**: Original PDF name
-- **Word Count**: Number of words extracted
-- **Character Count**: Total characters
-- **NHS Number**: Extracted NHS identifier
-- **Text Preview**: First 200 characters of the letter
-
-**AI Analysis:**
-- **AI Summary**: Comprehensive summary of the letter content
-- **Risk Level**: Low/Medium/High classification
-- **Confidence**: AI confidence score (0-100%)
-- **Key Findings**: Important clinical points
-- **Urgent Concerns**: Critical issues identified
-- **Risk Factors**: Potential risk indicators
-- **Recommended Actions**: Suggested next steps
-
-**Processing Information:**
-- **Processing Time**: How long the analysis took
-- **Storage ID**: Unique identifier for the record
-
-### View Letters Display
-In the "View Letters" tab, each letter shows:
-
-**Letter Card:**
-- **Date and Time**: When the letter was processed
-- **NHS Number**: Extracted identifier
-- **Urgency Level**: Risk classification
-- **Risk Factors**: Number of identified risks
-- **Key Findings**: Number of findings
-- **AI Confidence**: Confidence percentage
-- **Processing Date**: Formatted date
-- **Risk Bar**: Visual representation of risk level
-- **Download Button**: Access to original PDF (if available)
-
-## 🔧 Advanced Features
-
-### Downloading Original PDFs
-1. **In "View Letters"** tab, look for **"📄 Download Original PDF"** button
-2. **Click the button** - a secure download link will be generated
-3. **The file will download** with the original filename
-4. **Note**: Downloads are tracked for audit purposes
-
-### Understanding Risk Levels
-- **🟢 Low Risk**: Routine appointments, standard care
-- **🟡 Medium Risk**: Requires attention, follow-up needed
-- **🔴 High Risk**: Urgent care required, immediate action
-
-### AI Confidence Scores
-- **90-100%**: High confidence in analysis
-- **70-89%**: Good confidence with minor uncertainties
-- **50-69%**: Moderate confidence, review recommended
-- **Below 50%**: Low confidence, manual review advised
-
-## 🛡️ Security and Compliance Features
-
-### GDPR Compliance
-The system implements comprehensive GDPR compliance:
-- **Data Minimization**: Only processes necessary information
-- **Right to Erasure**: Complete data deletion capability
-- **Data Portability**: Export functionality available
-- **Consent Management**: Clear consent tracking
-- **Audit Trails**: Complete access logging
-- **Encryption**: Data encrypted in transit and at rest
-- **Data Retention**: Automatic cleanup policies
+**Testing PHI Protection:**
+1. **Upload the "Sample_File_with_PHI.pdf" file from the project's root directory** 
+2. **A PHI dialog will appear** explaining what was detected and masked
+3. **The system only flags actual names** - generic terms like "LONDON" are ignored
+4. **PHI masking happens before AI analysis** to protect patient privacy
 
 ### Audit Trail
 Every action is logged for compliance:
@@ -145,55 +53,18 @@ Every action is logged for compliance:
 - **Data access**: Download tracking, user interactions
 - **Storage details**: S3 location, metadata preservation
 
-## 🚨 Troubleshooting
+##  Troubleshooting
 
-### Common Issues
-
-**File Upload Fails:**
 - Ensure the file is a valid PDF
 - Check file size (should be under 10MB)
-- Verify internet connection
-
-**No NHS Number Found:**
-- The letter might not contain a valid NHS number
-- Check if the number format is standard (10 digits)
-- Some letters may use different identifier formats
-
-**Low AI Confidence:**
-- The letter content might be unclear or incomplete
-- Try uploading a different letter
-- Check if the text is properly extracted
-
-**Processing Takes Too Long:**
 - Normal processing time is 1-2 seconds
-- If longer, check your internet connection
-- The system will timeout after 30 seconds
 
-### Browser Compatibility
-- **Chrome**: Full support (recommended)
-- **Firefox**: Full support
-- **Safari**: Full support
-- **Edge**: Full support
-- **Internet Explorer**: Not supported
+## Security 
 
-## 📞 Support
+**Security:** No sensitive data stored in browser - everything goes through HTTPS to the API. File uploads are validated client-side, but all real processing happens server-side. PHI detection happens before AI processing to protect privacy.
 
-If you encounter issues:
-1. **Check the troubleshooting section** above
-2. **Try refreshing the page**
-3. **Clear browser cache** and try again
-4. **Contact support** with specific error details
+**Backend:** AWS Lambda (Node.js) with three functions - PDF processing, data retrieval, and secure file access. OpenAI GPT-4 integration for AI analysis. S3 for file storage, DynamoDB for analysis results.
 
-## 🔄 System Updates
+**Frontend:** React.js single-page app with hooks for state management. Real-time updates, responsive design, and graceful error handling.
 
-The system is continuously updated with:
-- **Performance improvements**
-- **New AI capabilities**
-- **Enhanced security features**
-- **Better user experience**
-
-Check the application regularly for the latest features and improvements.
-
----
-
-**Built for healthcare professionals with security and compliance in mind**
+**Deployment:** AWS SAM for infrastructure-as-code, automated deployments via CloudFormation. Git version control with clean commit history and proper branching strategy.
