@@ -46,6 +46,7 @@ Every action is logged for compliance:
 
 - Ensure the file is a valid PDF
 - Check file size (should be under 10MB)
+- Mobile devices might need a manual http address input
 - Normal processing time is 1-2 seconds
 
 ## Tech stack
