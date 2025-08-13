@@ -58,6 +58,7 @@ Every action is logged for compliance:
 - Normal processing time is 1-2 seconds
 
 ## Tech stack
+<img width="1157" height="600" alt="Screenshot 2025-08-13 at 06 11 37" src="https://github.com/user-attachments/assets/91f1328f-e5a4-4f12-995c-a4dee1120745" />
 
 **Backend:** AWS Lambda (Node.js) with three functions - PDF processing, data retrieval, and secure file access. OpenAI GPT-4 integration for AI analysis. S3 for file storage, DynamoDB for analysis results.
 
