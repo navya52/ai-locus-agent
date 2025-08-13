@@ -19,8 +19,8 @@
    - Risk assessment
    - Key findings and recommendations
 
-### Try the GDPR Compliance Hover Tooltip on the top right corner
-1. **Look for the "GDPR COMPLIANT"** badge (green button with checkmark) in the top right, a detailed tooltip will appear showing cool stuff
+### Try the Security Compliance Hover Tooltip on the top right corner
+1. **Look for the "Security COmpliance"** badge in the top right, a detailed tooltip will appear showing cool stuff
 
 ### Try the Database Audit Trail Hover Tooltip
 1. **In the " View Letters"** tab
@@ -58,4 +58,29 @@ Every action is logged for compliance:
 
 **Security:** No sensitive data stored in browser - everything goes through HTTPS to the API. File uploads are validated client-side, but all real processing happens server-side. PHI detection happens before AI processing to protect privacy.
 
+
 **Deployment:** AWS SAM for infrastructure-as-code, automated deployments via CloudFormation. Git version control with clean commit history and proper branching strategy.
+
+## Version Control & Deployment
+
+We keep things organized with Git - every change gets tracked, tested, and deployed smoothly. When we push code, it automatically builds and deploys to AWS. No manual server management needed, everything's serverless and scales automatically.
+
+## Error Handling & Graceful Degradation
+
+ If something goes wrong, you'll get friendly messages instead of scary error codes. For example:
+- **PDF processing fails?** → "Unable to read this file, please try a different PDF"
+- **AI analysis times out?** → "Analysis taking longer than expected, please wait"
+- **Network issues?** → "Connection problem, please check your internet and try again"
+
+We also have fallbacks - if the AI can't analyze a document, we still extract the NHS number and store the file.
+
+## System Logging & Debugging
+All logs go to AWS CloudWatch, so if something breaks, we can quickly figure out what happened and fix it.
+Everything gets logged for debugging and compliance. We track:
+- **User actions**: File uploads, downloads, analysis requests
+- **System performance**: Processing times, API response times
+- **Errors**: What went wrong, when, and why
+- **Security events**: Access attempts, PHI detection, data access
+
+
+
