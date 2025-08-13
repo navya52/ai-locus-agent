@@ -1,4 +1,4 @@
-# How to Use AI Patient Context SUmmary Generator
+# AI Patient Context Summary Generator
 
 ## Live Demo
 
