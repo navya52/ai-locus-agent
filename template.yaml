@@ -12,7 +12,7 @@ Globals:
         PYTHONPATH: /opt/python
   Api:
     Cors:
-      AllowMethods: "'POST,OPTIONS'"
+      AllowMethods: "'GET,POST,OPTIONS'"
       AllowHeaders: "'Content-Type'"
       AllowOrigin: "'*'"
 
@@ -31,6 +31,21 @@ Resources:
       Policies:
         - S3ReadPolicy:
             BucketName: !Ref UploadBucket
+        - DynamoDBCrudPolicy:
+            TableName: !Ref AnalysisTable
+
+  GetLettersFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: lambda_functions/
+      Handler: get_letters.handler
+      Events:
+        ApiEvent:
+          Type: Api
+          Properties:
+            Path: /get-letters
+            Method: get
+      Policies:
         - DynamoDBCrudPolicy:
             TableName: !Ref AnalysisTable
 

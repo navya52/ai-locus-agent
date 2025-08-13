@@ -30,15 +30,23 @@ async function analyzeWithAI(extractedText, filename) {
 
         console.log('DEBUG: Starting OpenAI analysis');
         
-        const prompt = `Analyze this clinical letter and provide a medical summary. Focus on:
+        const prompt = `Analyze this clinical letter and provide a medical summary. Be consistent and conservative in risk assessment.
+
+IMPORTANT GUIDELINES:
+- Only mark as "urgent" if there are immediate life-threatening concerns
+- Only mark as "high" risk if there are significant clinical risks
+- For routine appointments, use "low" risk
+- Be consistent in your assessment
+
+Focus on:
 1. Key clinical findings and diagnoses
-2. Urgent concerns that need immediate attention
+2. Urgent concerns that need immediate attention (only if truly urgent)
 3. Risk factors identified
-4. Overall risk level (low/medium/high)
+4. Overall risk level (low/medium/high) - be conservative
 5. Confidence in the analysis (0-100%)
 
 Clinical Letter Text:
-${extractedText.substring(0, 3000)} // Limit to first 3000 chars for API efficiency
+${extractedText.substring(0, 3000)}
 
 Provide your response in this exact JSON format:
 {
@@ -64,7 +72,7 @@ Provide your response in this exact JSON format:
                     content: prompt
                 }
             ],
-            temperature: 0.3,
+            temperature: 0.1,
             max_tokens: 500
         });
 
