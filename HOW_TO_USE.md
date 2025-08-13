@@ -25,7 +25,7 @@
 ### Try the Database Audit Trail Hover Tooltip
 1. **In the " View Letters"** tab
 2. **Look for "DATABASE AUDIT TRAIL ?"** button (next to letter date)
-3. **Hover over the button** - a tooltip will appear showing:
+3. **Hover over the button** - a tooltip will appear showing details of the data base storage. Security concerns in DB are addressed later in this doc.
   
 ## Also added a demo feature for edge case input - PHI Detection & Masking
 
@@ -42,6 +42,15 @@ Every action is logged for compliance:
 - **Data access**: Download tracking, user interactions
 - **Storage details**: S3 location, metadata preservation
 
+## Error Handling & Graceful Degradation
+
+ If something goes wrong, you'll get friendly messages instead of scary error codes. For example:
+- **PDF processing fails?** → "Unable to read this file, please try a different PDF"
+- **AI analysis times out?** → "Analysis taking longer than expected, please wait"
+- **Network issues?** → "Connection problem, please check your internet and try again"
+
+We also have fallbacks - if the AI can't analyze a document, we still extract the NHS number (using regex algorithm) and store the file.
+
 ##  Troubleshooting
 
 - Ensure the file is a valid PDF
@@ -52,28 +61,20 @@ Every action is logged for compliance:
 ## Tech stack
 <img width="1157" height="600" alt="Screenshot 2025-08-13 at 06 11 37" src="https://github.com/user-attachments/assets/91f1328f-e5a4-4f12-995c-a4dee1120745" />
 
-**Backend:** AWS Lambda (Node.js) with three functions - PDF processing, data retrieval, and secure file access. OpenAI GPT-4 integration for AI analysis. S3 for file storage, DynamoDB for analysis results.
+**Backend:** AWS Lambda (Node.js) with three functions - PDF processing, data retrieval, and secure file access. OpenAI GPT-4 integration for AI analysis. S3 for file storage, DynamoDB for analysis results (product use case tradeoffs discussed below).
 
 **Frontend:** React.js single-page app with hooks for state management. Real-time updates, responsive design, and graceful error handling.
 
 **Security:** No sensitive data stored in browser - everything goes through HTTPS to the API. File uploads are validated client-side, but all real processing happens server-side. PHI detection happens before AI processing to protect privacy.
 
 
-**Deployment:** AWS SAM for infrastructure-as-code, automated deployments via CloudFormation. Git version control with clean commit history and proper branching strategy.
+**Deployment:**  When we push code, it automatically builds and deploys to AWS. No manual server management needed, everything's serverless and scales automatically. AWS SAM for infrastructure-as-code, automated deployments via CloudFormation. Git version control with clean commit history and proper branching strategy.
 
 **Data Storage Security & Future Scaling:**
-Our current approach uses AWS DynamoDB with S3 for secure storage - PDFs go into private S3 buckets with unique keys, while analysis data gets AES-256 encrypted in DynamoDB with strict IAM access controls. For future scaling, we're considering a hybrid approach: keep DynamoDB for fast, cost-effective primary storage, but add an OpenSearch cluster for semantic search capabilities (e.g., "find similar heart conditions"). The tradeoff is complexity vs. functionality - OpenSearch gives you full-text search plus vector capabilities in one managed service, but comes with higher costs and operational overhead compared to simple DynamoDB lookups.
+Our current approach uses AWS DynamoDB with S3 for secure storage - PDFs go into private S3 buckets with unique keys, while analysis data gets AES-256 encrypted in DynamoDB with strict IAM access controls. This means Patient files are stored in secure digital vaults (like a locked filing cabinet) and the AI analysis is kept in an encrypted database (like a password-protected medical record) - only authorized staff can access either one.
 
-We keep things organized with Git - every change gets tracked, tested, and deployed smoothly. When we push code, it automatically builds and deploys to AWS. No manual server management needed, everything's serverless and scales automatically.
+For future scaling, we're considering a hybrid approach: keep DynamoDB for fast, cost-effective primary storage, but add an OpenSearch cluster for semantic search capabilities (e.g., "find similar heart conditions"). The tradeoff is complexity vs. functionality - OpenSearch gives you full-text search plus vector capabilities in one managed service, but comes with higher costs and operational overhead compared to simple DynamoDB lookups.
 
-## Error Handling & Graceful Degradation
-
- If something goes wrong, you'll get friendly messages instead of scary error codes. For example:
-- **PDF processing fails?** → "Unable to read this file, please try a different PDF"
-- **AI analysis times out?** → "Analysis taking longer than expected, please wait"
-- **Network issues?** → "Connection problem, please check your internet and try again"
-
-We also have fallbacks - if the AI can't analyze a document, we still extract the NHS number and store the file.
 
 ## System Logging & Debugging
 All logs go to AWS CloudWatch, so if something breaks, we can quickly figure out what happened and fix it.
