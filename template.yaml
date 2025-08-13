@@ -22,6 +22,9 @@ Resources:
     Properties:
       CodeUri: lambda_functions/
       Handler: upload_letter.handler
+      Environment:
+        Variables:
+          UPLOAD_BUCKET_NAME: !Ref UploadBucket
       Events:
         ApiEvent:
           Type: Api
@@ -29,7 +32,7 @@ Resources:
             Path: /upload-letter
             Method: post
       Policies:
-        - S3ReadPolicy:
+        - S3CrudPolicy:
             BucketName: !Ref UploadBucket
         - DynamoDBCrudPolicy:
             TableName: !Ref AnalysisTable
@@ -46,6 +49,26 @@ Resources:
             Path: /get-letters
             Method: get
       Policies:
+        - DynamoDBCrudPolicy:
+            TableName: !Ref AnalysisTable
+
+  GetFileFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: lambda_functions/
+      Handler: get_file.handler
+      Environment:
+        Variables:
+          UPLOAD_BUCKET_NAME: !Ref UploadBucket
+      Events:
+        ApiEvent:
+          Type: Api
+          Properties:
+            Path: /get-file
+            Method: get
+      Policies:
+        - S3ReadPolicy:
+            BucketName: !Ref UploadBucket
         - DynamoDBCrudPolicy:
             TableName: !Ref AnalysisTable
 
