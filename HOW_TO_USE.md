@@ -1,7 +1,5 @@
 # How to Use AI Locus Agent
 
-A comprehensive guide to using the AI Locus Agent system for clinical letter processing and analysis.
-
 ## Live Demo
 
 1. Navigate to http://ai-locus-agent-frontend.s3-website.eu-west-2.amazonaws.com
