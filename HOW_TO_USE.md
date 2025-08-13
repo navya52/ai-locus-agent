@@ -61,7 +61,8 @@ Every action is logged for compliance:
 
 **Deployment:** AWS SAM for infrastructure-as-code, automated deployments via CloudFormation. Git version control with clean commit history and proper branching strategy.
 
-## Version Control & Deployment
+**Data Storage Security & Future Scaling:**
+Our current approach uses AWS DynamoDB with S3 for secure storage - PDFs go into private S3 buckets with unique keys, while analysis data gets AES-256 encrypted in DynamoDB with strict IAM access controls. For future scaling, we're considering a hybrid approach: keep DynamoDB for fast, cost-effective primary storage, but add an OpenSearch cluster for semantic search capabilities (e.g., "find similar heart conditions"). The tradeoff is complexity vs. functionality - OpenSearch gives you full-text search plus vector capabilities in one managed service, but comes with higher costs and operational overhead compared to simple DynamoDB lookups.
 
 We keep things organized with Git - every change gets tracked, tested, and deployed smoothly. When we push code, it automatically builds and deploys to AWS. No manual server management needed, everything's serverless and scales automatically.
 
