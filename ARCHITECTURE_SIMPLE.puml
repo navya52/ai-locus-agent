@@ -1,0 +1,95 @@
+@startuml Clinical Letter Processing System - Simplified
+
+!theme plain
+skinparam backgroundColor #FFFFFF
+skinparam componentStyle rectangle
+
+title **Clinical Letter Processing System - Simplified Overview**
+
+actor "Healthcare Professional" as User
+
+package "**User Interface**" as Frontend {
+    [Web Application] as React
+    note right of React
+        • Upload clinical letters
+        • View analysis results
+        • Download original files
+    end note
+}
+
+package "**Processing Engine**" as Processing {
+    [AI Analysis] as AI
+    note right of AI
+        • Extract NHS numbers
+        • Generate summaries
+        • Assess risk levels
+        • Protect patient privacy
+    end note
+}
+
+package "**Secure Storage**" as Storage {
+    database "File Storage" as S3
+    note right of S3
+        • Original PDF files
+        • Complete audit trail
+    end note
+    
+    database "Analysis Database" as DynamoDB
+    note right of DynamoDB
+        • AI summaries
+        • Risk assessments
+        • Processing results
+    end note
+}
+
+package "**Security & Compliance**" as Compliance {
+    [Privacy Protection] as Privacy
+    note right of Privacy
+        • GDPR compliant
+        • NHS standards
+        • Data encryption
+    end note
+}
+
+' Main data flow - simplified
+User --> React : Upload PDF
+React --> AI : Process letter
+AI --> S3 : Store original file
+AI --> DynamoDB : Store analysis
+AI --> Privacy : Apply protection
+React --> User : Show results
+
+' View existing letters
+User --> React : View letters
+React --> DynamoDB : Get analysis
+DynamoDB --> React : Return data
+React --> User : Display results
+
+' Download original file
+User --> React : Download PDF
+React --> S3 : Get file
+S3 --> React : Return file
+React --> User : Download complete
+
+' Styling
+skinparam component {
+    BackgroundColor #E8F4FD
+    BorderColor #0066CC
+}
+
+skinparam database {
+    BackgroundColor #F0F8FF
+    BorderColor #0066CC
+}
+
+skinparam package {
+    BackgroundColor #F5F5F5
+    BorderColor #666666
+}
+
+skinparam note {
+    BackgroundColor #FFFACD
+    BorderColor #FFD700
+}
+
+@enduml

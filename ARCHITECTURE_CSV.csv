@@ -1,0 +1,21 @@
+ID,Shape Type,Label,Connected To
+1,Actor,Clinician (User),2
+2,Process,React Frontend (Upload Interface),3,8
+3,AWS Service,AWS API Gateway,4,5,6
+4,AWS Service,AWS Lambda (Node.js - Upload Processing),5,7,9,10
+5,AWS Service,AWS S3 Bucket (File Storage),4,11
+6,AWS Service,AWS Lambda (Node.js - Get Letters),7
+7,AWS Service,AWS DynamoDB (Analysis Data),4,6,11
+8,Process,React Frontend (View Letters),6
+9,Process,AI Summary Generator (OpenAI GPT),4
+10,Process,PHI Detection & Masking,4
+11,AWS Service,AWS Lambda (Node.js - File Retrieval),5,7
+12,Process,NHS Compliance Layer (GDPR/Audit),4,7,10
+13,Data Store,Clinical Letter PDF,1,2
+14,Data Store,Masked Clinical Text,10,9
+15,Data Store,AI Analysis Results,9,7
+16,Data Store,Audit Trail Data,12,7
+17,Process,File Upload Process,2,3
+18,Process,PDF Text Extraction,4,10
+19,Process,Risk Assessment Engine,9,15
+20,Process,Data Storage & Retrieval,4,5,7

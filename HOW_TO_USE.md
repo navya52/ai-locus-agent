@@ -1,39 +1,49 @@
-# How to Use AI Locus Agent
+# How to Use Patient Context
+
+A clinical letter processing system that helps doctors quickly understand patient history from PDF letters.
 
 ## Live Demo
 
 1. Navigate to http://ai-locus-agent-frontend.s3-website.eu-west-2.amazonaws.com
 
-2. You'll see the main interface with two tabs:
+## Getting Started
+
+### Step 1: Access the Application
+2. Navigate to: http://ai-locus-agent-frontend.s3-website.eu-west-2.amazonaws.com
+ (Only HTTP works for now, had to rollback HTTPS last minute due to CloudFront's free plan not being suitable)
+3. You'll see the main interface with two tabs:
    - **Upload Letter** - For processing new letters
-   - **View Letters** - For viewing previously processed letters (letters might already exist from testing)
+   - **View Letters** - For viewing previously processed letters (letters already exist from me testing)
 
-### Upload Your First Letter
-1. Click on the **" Upload Letter"** tab
-2. Click **"Choose File"** or drag and drop a PDF clinical letter
+### Step 2: Process Your First Letter
+1. Click **"📄 Upload Letter"**
+2. Upload a PDF clinical letter (drag & drop or click to select)
 3. Click **"Upload and Analyze"**
-4. Wait for processing (typically 1-2 seconds)
-5. View the results showing:
-   - NHS number extraction
-   - AI-generated summary
-   - Risk assessment
-   - Key findings and recommendations
+4. Wait 1-2 seconds for processing
+5. Review the results:
+   - **NHS number** (automatically extracted)
+   - **AI summary** (key clinical points)
+   - **Risk assessment** (urgency level)
+   - **Key findings** (important details)
 
-### Try the Security Compliance Hover Tooltip on the top right corner
-1. **Look for the "Security COmpliance"** badge in the top right, a detailed tooltip will appear showing cool stuff
+## Interactive Features
 
-### Try the Database Audit Trail Hover Tooltip
-1. **In the " View Letters"** tab
-2. **Look for "DATABASE AUDIT TRAIL ?"** button (next to letter date)
-3. **Hover over the button** - a tooltip will appear showing:
+### Security Compliance Badge
+- **Look for** the "Security Compliance" badge (top right)
+- **Hover over it** to see security features and compliance details
+
+### Audit Trail
+- **Go to** "📋 View Letters" tab
+- **Hover over** "DATABASE AUDIT TRAIL ?" buttons
+- **See** actual database records and file storage details
   
-## Also added a demo feature for edge case input - PHI Detection & Masking
+## Privacy Protection Demo
 
-**Testing PHI Protection:**
-1. **Upload the "Sample_File_with_PHI.pdf" file from the project's root directory** 
-2. **A PHI dialog will appear** explaining what was detected and masked
-3. **The system only flags actual names** - generic terms like "LONDON" are ignored
-4. **PHI masking happens before AI analysis** to protect patient privacy
+**Test PHI Detection:**
+1. Upload "Sample_File_with_PHI.pdf" from the project root
+2. **Watch** the privacy protection dialog appear
+3. **See** how patient names are automatically detected and masked
+4. **Note** that NHS numbers are preserved for clinical continuity
 
 ### Audit Trail
 Every action is logged for compliance:
@@ -42,12 +52,25 @@ Every action is logged for compliance:
 - **Data access**: Download tracking, user interactions
 - **Storage details**: S3 location, metadata preservation
 
-##  Troubleshooting
+## Real-World Use Cases
 
-- Ensure the file is a valid PDF
-- Check file size (should be under 10MB)
-- Mobile devices might need a manual http address input
-- Normal processing time is 1-2 seconds
+**For Doctors:**
+- Quickly understand patient history from multiple letters
+- Identify urgent cases that need immediate attention
+- Access patient information without opening multiple PDFs
+- Maintain audit trails for compliance
+
+**For Healthcare Teams:**
+- Share patient summaries with colleagues
+- Track patient progress over time
+- Ensure privacy compliance with automatic PHI detection
+- Access original documents when needed
+
+## Troubleshooting
+
+- **File issues**: Ensure PDF is valid and under 10MB
+- **Mobile access**: May need to manually type "http://" before URL
+- **Processing time**: Normal is 1-2 seconds
 
 ## Tech stack
 <img width="1157" height="600" alt="Screenshot 2025-08-13 at 06 11 37" src="https://github.com/user-attachments/assets/91f1328f-e5a4-4f12-995c-a4dee1120745" />

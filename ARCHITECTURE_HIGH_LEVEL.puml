@@ -1,0 +1,63 @@
+@startuml Clinical Letter Processing System - High Level
+
+!theme plain
+skinparam backgroundColor #FFFFFF
+skinparam componentStyle rectangle
+
+title **Clinical Letter Processing System - High Level Architecture**
+
+actor "Healthcare Professional" as User
+
+rectangle "**Web Application**" as Web {
+    [Upload Interface] as Upload
+    [Results Dashboard] as Dashboard
+    [File Management] as Files
+}
+
+rectangle "**AI Processing Engine**" as AI {
+    [Document Analysis] as Analysis
+    [Risk Assessment] as Risk
+    [Privacy Protection] as Privacy
+}
+
+rectangle "**Secure Data Storage**" as Storage {
+    [Original Documents] as Docs
+    [Analysis Results] as Results
+}
+
+rectangle "**Compliance & Security**" as Compliance {
+    [GDPR Compliance] as GDPR
+    [NHS Standards] as NHS
+}
+
+' Main flows
+User --> Upload : Upload clinical letter
+Upload --> Analysis : Process document
+Analysis --> Risk : Assess clinical risk
+Analysis --> Privacy : Protect patient data
+Analysis --> Docs : Store original
+Analysis --> Results : Store analysis
+Results --> Dashboard : Display results
+Dashboard --> User : Show insights
+
+' Compliance
+Privacy --> GDPR : Ensure compliance
+Analysis --> NHS : Follow standards
+
+' File access
+User --> Files : Access documents
+Files --> Docs : Retrieve originals
+Files --> Results : Get analysis
+
+' Styling
+skinparam rectangle {
+    BackgroundColor #E8F4FD
+    BorderColor #0066CC
+}
+
+skinparam actor {
+    BackgroundColor #F0F8FF
+    BorderColor #0066CC
+}
+
+@enduml
