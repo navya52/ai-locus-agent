@@ -4,8 +4,6 @@
 
 1. Navigate to http://ai-locus-agent-frontend.s3-website.eu-west-2.amazonaws.com
 
-> **Note**: Only HTTP works for now, had to rollback HTTPS last minute due to CloudFront's free plan not being suitable. Click on "proceed anyway"
-
 2. You'll see the main interface with two tabs:
    - **Upload Letter** - For processing new letters
    - **View Letters** - For viewing previously processed letters (letters might already exist from testing)
