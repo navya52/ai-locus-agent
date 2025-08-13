@@ -1,10 +1,15 @@
 const pdfParse = require('pdf-parse');
 const OpenAI = require('openai');
+const AWS = require('aws-sdk');
 
 // Initialize OpenAI client
 const openai = new OpenAI({
     apiKey: process.env.OPENAI_API_KEY
 });
+
+// Initialize DynamoDB
+const dynamodb = new AWS.DynamoDB.DocumentClient();
+const TABLE_NAME = 'ai-locus-agent-analysis';
 
 // AI analysis function
 async function analyzeWithAI(extractedText, filename) {
@@ -108,7 +113,39 @@ Provide your response in this exact JSON format:
     }
 }
 
+// Function to store data in DynamoDB
+async function storeAnalysisData(data) {
+    try {
+        const params = {
+            TableName: TABLE_NAME,
+            Item: {
+                storage_id: data.storage_info.storage_id,
+                timestamp: new Date().toISOString(),
+                filename: data.file_info.filename,
+                word_count: data.file_info.word_count,
+                character_count: data.file_info.character_count,
+                nhs_number: data.extracted_data.nhs_number,
+                text_preview: data.extracted_data.text_preview,
+                ai_summary: data.ai_summary,
+                storage_status: data.storage_info.storage_status,
+                storage_reason: data.storage_info.storage_reason,
+                data_retention_policy: data.storage_info.data_retention_policy,
+                privacy_compliant: data.storage_info.privacy_compliant,
+                audit_trail_enabled: data.storage_info.audit_trail_enabled
+            }
+        };
+        
+        await dynamodb.put(params).promise();
+        console.log('Data stored in DynamoDB successfully');
+        return true;
+    } catch (error) {
+        console.error('Error storing data in DynamoDB:', error);
+        return false;
+    }
+}
+
 exports.handler = async (event, context) => {
+    const startTime = Date.now();
     console.log('DEBUG: Node.js Lambda function with PDF processing and AI analysis started');
     const headers = {
         'Access-Control-Allow-Origin': '*',
@@ -169,6 +206,7 @@ exports.handler = async (event, context) => {
         status: 'success',
         message: 'PDF processing and AI analysis completed',
         api_version: '1.0.0',
+        processing_time: ((Date.now() - startTime) / 1000).toFixed(2),
         processing_timestamp: new Date().toISOString(),
         file_info: {
             filename: filename,
@@ -189,6 +227,12 @@ exports.handler = async (event, context) => {
             audit_trail_enabled: true
         }
     };
+    
+    // Store data in DynamoDB
+    const storageSuccess = await storeAnalysisData(responseData);
+    if (!storageSuccess) {
+        console.log('Warning: Failed to store data in DynamoDB');
+    }
     
     return {
         statusCode: 200,

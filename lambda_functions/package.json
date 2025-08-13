@@ -8,7 +8,8 @@
   },
   "dependencies": {
     "pdf-parse": "^1.1.1",
-    "openai": "^4.28.0"
+    "openai": "^4.28.0",
+    "aws-sdk": "^2.1574.0"
   },
   "keywords": ["aws", "lambda"],
   "author": "",

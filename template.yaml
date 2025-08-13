@@ -6,7 +6,7 @@ Globals:
   Function:
     Timeout: 30
     MemorySize: 512
-    Runtime: python3.9
+    Runtime: nodejs18.x
     Environment:
       Variables:
         PYTHONPATH: /opt/python
@@ -21,7 +21,7 @@ Resources:
     Type: AWS::Serverless::Function
     Properties:
       CodeUri: lambda_functions/
-      Handler: upload_letter.lambda_handler
+      Handler: upload_letter.handler
       Events:
         ApiEvent:
           Type: Api
