@@ -1,0 +1,18 @@
+{
+  "analysis_id": "analysis_20250812_110249",
+  "timestamp": "2025-08-12T11:02:53.356818",
+  "processing_time": 3.944061040878296,
+  "model_used": "gpt-3.5-turbo",
+  "confidence_score": 0.9,
+  "data_hash": "92cbc4e08871a8c1916e1a398e7d3a025831e00b10760dcc4bc8706309870ea7",
+  "risk_factors": [
+    "History of seizures increases the risk of future seizure episodes and may indicate an underlying neurological condition."
+  ],
+  "storage_id": "20250812_120253_ff8a3207",
+  "classification": {
+    "data_type": "clinical_output",
+    "sensitivity_level": "low",
+    "retention_days": 30,
+    "audit_required": true
+  }
+}

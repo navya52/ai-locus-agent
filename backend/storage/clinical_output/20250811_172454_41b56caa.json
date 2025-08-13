@@ -1,0 +1,19 @@
+{
+  "analysis_id": "analysis_20250811_162452",
+  "timestamp": "2025-08-11T16:24:54.251598",
+  "processing_time": 1.9196481704711914,
+  "model_used": "gpt-3.5-turbo",
+  "confidence_score": 0.9,
+  "data_hash": "40d28a2e18ceb8af96b7e9952104cc22dc806a380523f5f2a21d65b85089f42a",
+  "risk_factors": [
+    "Hypertension",
+    "Diabetes"
+  ],
+  "storage_id": "20250811_172454_41b56caa",
+  "classification": {
+    "data_type": "clinical_output",
+    "sensitivity_level": "low",
+    "retention_days": 30,
+    "audit_required": true
+  }
+}

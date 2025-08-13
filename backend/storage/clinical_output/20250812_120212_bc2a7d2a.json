@@ -1,0 +1,18 @@
+{
+  "analysis_id": "analysis_20250812_110210",
+  "timestamp": "2025-08-12T11:02:12.088489",
+  "processing_time": 1.889451026916504,
+  "model_used": "gpt-3.5-turbo",
+  "confidence_score": 0.9,
+  "data_hash": "f098dd8972aed956931a2aa819d4bcc33751c505161a602ced63db40a2f44db3",
+  "risk_factors": [
+    "History of hypertension and diabetes are significant risk factors for cardiovascular disease and can contribute to the current presentation"
+  ],
+  "storage_id": "20250812_120212_bc2a7d2a",
+  "classification": {
+    "data_type": "clinical_output",
+    "sensitivity_level": "low",
+    "retention_days": 30,
+    "audit_required": true
+  }
+}

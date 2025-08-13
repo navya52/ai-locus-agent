@@ -1,0 +1,18 @@
+{
+  "analysis_id": "analysis_20250812_105028",
+  "timestamp": "2025-08-12T10:50:32.737237",
+  "processing_time": 3.7712242603302,
+  "model_used": "gpt-3.5-turbo",
+  "confidence_score": 0.9,
+  "data_hash": "064f9aabdccead7e6b236c1c6d7390319e67d13fbc5e242c9c6d011a78b8e0fb",
+  "risk_factors": [
+    "The combination of symptoms could be suggestive of conditions like migraines, increased intracranial pressure, or neurological disorders."
+  ],
+  "storage_id": "20250812_115032_3944b90a",
+  "classification": {
+    "data_type": "clinical_output",
+    "sensitivity_level": "low",
+    "retention_days": 30,
+    "audit_required": true
+  }
+}
