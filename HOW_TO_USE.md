@@ -87,7 +87,7 @@ we can consider a hybrid approach: keep DynamoDB for fast, cost-effective primar
 In production it is important to monitor performance and resolve errors quickly. All our logs go to AWS CloudWatch, so if something breaks, we can quickly figure out what happened and fix it.
 Everything gets logged for debugging and compliance. We track:
 - **Errors**: What went wrong, when, and why
-- **Security events**: PHI detection  (Access attempts,data access logs are one step away)
+- **Security events**: PHI detection  (Access attempts,data access logs in the future)
 - **User actions**: File uploads, downloads, analysis requests
 - **System performance**: Processing times, API response times
 
