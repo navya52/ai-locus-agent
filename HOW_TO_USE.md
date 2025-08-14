@@ -3,15 +3,10 @@
 A clinical letter processing system that helps doctors quickly understand patient history from PDF letters.
 
 ## Live Demo
-
-1. Navigate to http://ai-locus-agent-frontend.s3-website.eu-west-2.amazonaws.com
-
-## Getting Started
-
 ### Step 1: Access the Application
-2. Navigate to: http://ai-locus-agent-frontend.s3-website.eu-west-2.amazonaws.com
- (Only HTTP works for now, had to rollback HTTPS last minute due to CloudFront's free plan not being suitable)
-3. You'll see the main interface with two tabs:
+
+1. Navigate to: http://ai-locus-agent-frontend.s3-website.eu-west-2.amazonaws.com
+2. You'll see the main interface with two tabs:
    - **Upload Letter** - For processing new letters
    - **View Letters** - For viewing previously processed letters (letters already exist from me testing)
 
@@ -26,7 +21,7 @@ A clinical letter processing system that helps doctors quickly understand patien
    - **Risk assessment** (urgency level)
    - **Key findings** (important details)
 
-## Interactive Features
+## Added some Interactive Features to visualize data treatment
 
 ### Security Compliance Badge
 - **Look for** the "Security Compliance" badge (top right)
@@ -39,7 +34,7 @@ A clinical letter processing system that helps doctors quickly understand patien
   
 ## Privacy Protection Demo
 
-**Test PHI Detection:**
+**Added a feature to filter out sensitive data before LLM calls**
 1. Upload "Sample_File_with_PHI.pdf" from the project root
 2. **Watch** the privacy protection dialog appear
 3. **See** how patient names are automatically detected and masked
@@ -52,47 +47,19 @@ Every action is logged for compliance:
 - **Data access**: Download tracking, user interactions
 - **Storage details**: S3 location, metadata preservation
 
-## Real-World Use Cases
-
-**For Doctors:**
-- Quickly understand patient history from multiple letters
-- Identify urgent cases that need immediate attention
-- Access patient information without opening multiple PDFs
-- Maintain audit trails for compliance
-
-**For Healthcare Teams:**
-- Share patient summaries with colleagues
-- Track patient progress over time
-- Ensure privacy compliance with automatic PHI detection
-- Access original documents when needed
-
 ## Error Handling & Graceful Degradation
 
 If something goes wrong, you'll get friendly messages instead of scary error codes. For example:
-- **PDF processing fails?** → "Unable to read this file, please try a different PDF"
-- **AI analysis times out?** → "Analysis taking longer than expected, please wait"
-- **Network issues?** → "Connection problem, please check your internet and try again"
+- **PDF processing fails** → "Unable to read this file, please try a different PDF"
+- **AI analysis times out** → "Analysis taking longer than expected, please wait"
+- **Network issues** → "Connection problem, please check your internet and try again"
 
-We also have fallbacks - if the AI can't analyze a document, we still extract the NHS number (using regex algorithm) and store the file.
-
-## Troubleshooting
-
-**For Doctors:**
-- Quickly understand patient history from multiple letters
-- Identify urgent cases that need immediate attention
-- Access patient information without opening multiple PDFs
-- Maintain audit trails for compliance
-
-**For Healthcare Teams:**
-- Share patient summaries with colleagues
-- Track patient progress over time
-- Ensure privacy compliance with automatic PHI detection
-- Access original documents when needed
+We also have fallbacks - if the AI can't analyze a document, we still extract the NHS number (using a regex algorithm) and store the file.
 
 ## Troubleshooting
 
 - **File issues**: Ensure PDF is valid and under 10MB
-- **Mobile access**: May need to manually type "http://" before URL
+- **Website access**: modile devices need to manually type "http://" before URL
 - **Processing time**: Normal is 1-2 seconds
 
 ## Tech stack
@@ -113,11 +80,11 @@ Our current approach uses AWS DynamoDB with S3 for secure storage - Patient file
 In tech terms, PDFs go into private S3 buckets with unique keys, while analysis data gets AES-256 encrypted in DynamoDB with strict IAM access controls. 
 
 For future scaling, for example when someone searches "find similar heart conditions":
-we're considering a hybrid approach: keep DynamoDB for fast, cost-effective primary storage, but add an OpenSearch cluster . The tradeoff is complexity vs. functionality - OpenSearch is faster for indexing that DynamoDB, essentially because of the way it stores data. We can discuss this in depth if needed.
+we can consider a hybrid approach: keep DynamoDB for fast, cost-effective primary storage, but add an OpenSearch cluster for indexing. The tradeoff is complexity vs. functionality - OpenSearch is faster for indexing that DynamoDB, essentially because of the way it stores data. We can discuss this in depth if needed.
 
 
 ## System Logging & Debugging
-In production it is important to monitor problems and resolve them quickly. All our logs go to AWS CloudWatch, so if something breaks, we can quickly figure out what happened and fix it.
+In production it is important to monitor performance and resolve errors quickly. All our logs go to AWS CloudWatch, so if something breaks, we can quickly figure out what happened and fix it.
 Everything gets logged for debugging and compliance. We track:
 - **Errors**: What went wrong, when, and why
 - **Security events**: PHI detection  (Access attempts,data access logs are one step away)
