@@ -96,7 +96,8 @@ We also have fallbacks - if the AI can't analyze a document, we still extract th
 - **Processing time**: Normal is 1-2 seconds
 
 ## Tech stack
-<img width="1157" height="600" alt="Screenshot 2025-08-13 at 06 11 37" src="https://github.com/user-attachments/assets/91f1328f-e5a4-4f12-995c-a4dee1120745" />
+<img width="1332" height="656" alt="Screenshot 2025-08-14 at 14 04 33" src="https://github.com/user-attachments/assets/2e4dbf69-99b4-4b1b-83e4-d23d07395d4f" />
+
 
 **Backend:** AWS Lambda (Node.js) with three functions - PDF processing, data retrieval, and secure file access. OpenAI GPT-4 integration for AI analysis. S3 for file storage, DynamoDB for analysis results (product use case tradeoffs discussed below).
 
