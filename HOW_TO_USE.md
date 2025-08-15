@@ -68,6 +68,8 @@ We also have fallbacks - if the AI can't analyze a document, we still extract th
 
 **Backend:** AWS Lambda (Node.js) with three functions - PDF processing, data retrieval, and secure file access. OpenAI GPT-4 integration for AI analysis. S3 for file storage, DynamoDB for analysis results (product use case tradeoffs discussed below).
 
+**Stateless API:**Each Lambda function receives all necessary data in the request (file data, storage ID, query params) and processes it independently without storing any state between requests - every request is self-contained and stateless.
+
 **Frontend:** React.js single-page app with hooks for state management. Real-time updates, responsive design, and graceful error handling.
 
 **Security:** No sensitive data stored in browser - everything goes through HTTPS to the API. File uploads are validated client-side, but all real processing happens server-side. PHI detection happens before AI processing to protect privacy.
