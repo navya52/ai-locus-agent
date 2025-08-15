@@ -2,6 +2,13 @@ AWSTemplateFormatVersion: '2010-09-09'
 Transform: AWS::Serverless-2016-10-31
 Description: AI Locus Agent - PDF Processing Lambda Function
 
+Parameters:
+  Environment:
+    Type: String
+    Default: dev
+    AllowedValues: [dev, staging, prod]
+    Description: Environment for deployment
+
 Globals:
   Function:
     Timeout: 30
@@ -25,6 +32,8 @@ Resources:
       Environment:
         Variables:
           UPLOAD_BUCKET_NAME: !Ref UploadBucket
+          DYNAMODB_TABLE_NAME: !Ref AnalysisTable
+          ENVIRONMENT: !Ref Environment
       Events:
         ApiEvent:
           Type: Api
@@ -42,7 +51,10 @@ Resources:
     Properties:
       CodeUri: lambda_functions/
       Handler: get_letters.handler
-      Events:
+      Environment:
+        Variables:
+          DYNAMODB_TABLE_NAME: !Ref AnalysisTable
+          ENVIRONMENT: !Ref Environment      Events:
         ApiEvent:
           Type: Api
           Properties:
@@ -60,6 +72,8 @@ Resources:
       Environment:
         Variables:
           UPLOAD_BUCKET_NAME: !Ref UploadBucket
+          DYNAMODB_TABLE_NAME: !Ref AnalysisTable
+          ENVIRONMENT: !Ref Environment
       Events:
         ApiEvent:
           Type: Api
@@ -86,7 +100,7 @@ Resources:
   AnalysisTable:
     Type: AWS::DynamoDB::Table
     Properties:
-      TableName: ai-locus-agent-analysis
+      TableName: !Sub "ai-locus-agent-analysis-${Environment}"
       BillingMode: PAY_PER_REQUEST
       AttributeDefinitions:
         - AttributeName: storage_id

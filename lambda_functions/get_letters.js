@@ -2,7 +2,14 @@ const AWS = require('aws-sdk');
 
 // Initialize DynamoDB
 const dynamodb = new AWS.DynamoDB.DocumentClient();
-const TABLE_NAME = 'ai-locus-agent-analysis';
+const TABLE_NAME = process.env.DYNAMODB_TABLE_NAME;
+const ENVIRONMENT = process.env.ENVIRONMENT;
+
+if (!TABLE_NAME) {
+    throw new Error('DYNAMODB_TABLE_NAME environment variable is required');
+}
+
+console.log(`Using table: ${TABLE_NAME} in environment: ${ENVIRONMENT}`);
 
 exports.handler = async (event, context) => {
     const headers = {

@@ -3,7 +3,14 @@ const AWS = require('aws-sdk');
 // Initialize AWS services
 const s3 = new AWS.S3();
 const dynamodb = new AWS.DynamoDB.DocumentClient();
-const TABLE_NAME = 'ai-locus-agent-analysis';
+const TABLE_NAME = process.env.DYNAMODB_TABLE_NAME;
+const ENVIRONMENT = process.env.ENVIRONMENT;
+
+if (!TABLE_NAME) {
+    throw new Error('DYNAMODB_TABLE_NAME environment variable is required');
+}
+
+console.log(`Using table: ${TABLE_NAME} in environment: ${ENVIRONMENT}`);
 const S3_BUCKET_NAME = process.env.UPLOAD_BUCKET_NAME || 'ai-locus-agent-uploads-793312799936';
 
 exports.handler = async (event, context) => {

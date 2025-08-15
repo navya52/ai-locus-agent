@@ -10,7 +10,14 @@ const openai = new OpenAI({
 // Initialize AWS services
 const dynamodb = new AWS.DynamoDB.DocumentClient();
 const s3 = new AWS.S3();
-const TABLE_NAME = 'ai-locus-agent-analysis';
+const TABLE_NAME = process.env.DYNAMODB_TABLE_NAME;
+const ENVIRONMENT = process.env.ENVIRONMENT;
+
+if (!TABLE_NAME) {
+    throw new Error('DYNAMODB_TABLE_NAME environment variable is required');
+}
+
+console.log(`Using table: ${TABLE_NAME} in environment: ${ENVIRONMENT}`);
 const S3_BUCKET_NAME = process.env.UPLOAD_BUCKET_NAME || 'ai-locus-agent-uploads-793312799936';
 
 // Store file in S3 for audit trail
